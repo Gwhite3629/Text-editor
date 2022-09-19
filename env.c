@@ -29,7 +29,7 @@ void enableRaw(void)
     raw.c_iflag &= ~(IXON);
     raw.c_lflag &= ~(ECHO | ICANON);
 
-    raw.c_cc[VMIN] = 2; // Set to 0 for polling on faster systems
+    raw.c_cc[VMIN] = 0; // Set to 0 for polling on faster systems
     raw.c_cc[VTIME] = 0;
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
@@ -373,7 +373,7 @@ void *input(void *arg)
         } else if (c == 0x11) {
             pthread_spin_lock(&(*env)->lock);
             char t = 'n';
-            printf("Save? [y/n]\n");
+            printf("Save? [y/n]:\n");
             while(!read(STDIN_FILENO, &t, 1));
             if (t == 'y')
                 CHECK(ret = write_file(env));
@@ -431,7 +431,7 @@ err write_file(struct environment **env)
     unsigned long l = 0;
 
     if (!(*env)->valid_fname) {
-        printf("Enter file name\n");
+        printf("Enter file name:\n");
         while(c != '\n') {
             if (read(STDIN_FILENO, &c, 1)) {
                 if (c != '\n') {
@@ -442,6 +442,7 @@ err write_file(struct environment **env)
             }
         }
         (*env)->valid_fname = 1;
+        (*env)->new = 1;
     }
 
     VALID(f = fopen((*env)->file_name, "w+"), FILE_ERROR, WRITE_ERROR);
