@@ -125,38 +125,37 @@ err draw(struct environment **env)
     for (unsigned long i = (*env)->top; i < (*env)->bottom; i++) {
         if (i <= (*env)->max) {
             printf("%3ld: ", i);
-            write()
-            write(STDOUT_FILENO, ": ", 2);
+            //write(STDOUT_FILENO, ": ", 2);
             if (i == ((*env)->index)) {
                 for (unsigned long j = 0; j <= (*env)->file_data[i].max; j++) {
                     if (j == ((*env)->file_data[i].index)){
                         if ((*env)->file_data[i].index == (*env)->file_data[i].max) {
-                            //printf("\033[30m\033[47m ");
-                            write(STDOUT_FILENO, "\033[30m\033[47m ", 11);
-                            //printf("\033[0m");
-                            write(STDOUT_FILENO, "\033[0m", 4);
+                            printf("\033[30m\033[47m ");
+                            //write(STDOUT_FILENO, "\033[30m\033[47m ", 11);
+                            printf("\033[0m");
+                            //write(STDOUT_FILENO, "\033[0m", 4);
                         } else {
-                            //printf("\033[30m\033[47m%c", (*env)->file_data[i].ldata[j]);
-                            write(STDOUT_FILENO, "\033[0m\033[47m", 9);
-                            write(STDOUT_FILENO, (*env)->file_data[i].data[j], 1);
-                            //printf("\033[0m");
-                            write(STDOUT_FILENO, "\033[0m", 4);
+                            printf("\033[30m\033[47m%c", (*env)->file_data[i].ldata[j]);
+                            //write(STDOUT_FILENO, "\033[0m\033[47m", 9);
+                            //write(STDOUT_FILENO, &(*env)->file_data[i].ldata[j], 1);
+                            printf("\033[0m");
+                            //write(STDOUT_FILENO, "\033[0m", 4);
                         }
                     } else {
-                        //printf("%c", (*env)->file_data[i].ldata[j]);
-                        write(STDOUT_FILENO, (*env)->file_data[i].ldata[j], 1);
+                        printf("%c", (*env)->file_data[i].ldata[j]);
+                        //write(STDOUT_FILENO, &(*env)->file_data[i].ldata[j], 1);
                     }
                 }
-                //printf("\n");
-                write(STDOUT_FILENO, "\n", 1);
+                printf("\n");
+                //write(STDOUT_FILENO, "\n", 1);
             } else {
-                //printf("%s\n", (*env)->file_data[i].ldata);
-                write(STDOUT_FILENO, (*env)->file_data[i].ldata, (*env)->file_data[i].max);
-                write(STDOUT_FILENO, "\n", 1);
+                printf("%s\n", (*env)->file_data[i].ldata);
+                //write(STDOUT_FILENO, (*env)->file_data[i].ldata, (*env)->file_data[i].max);
+                //write(STDOUT_FILENO, "\n", 1);
             }
         } else {
-            //printf("~\n");
-            write(STDOUT_FILENO, "~\n", 2);
+            printf("~\n");
+            //write(STDOUT_FILENO, "~\n", 2);
         }
     }
 
